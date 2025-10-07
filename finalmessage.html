@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Bii! 💖</title>
+    <link rel="stylesheet" href="finalmessage.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="canvas-container"></div>
+
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+
+        <div id="content">
+            <!-- Main Birthday Message Step -->
+            <div class="step active" id="step1">
+                <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Happy Birthday, Bii! 🎉</h1>
+                <p>
+                    Hi Bii, I just want to take a moment to tell you how much you truly mean to me. Being with you feels
+                    like home—safe, warm, and filled with happiness. I never thought I'd experience this so deeply.
+                    You're not just my boyfriend; you're my best friend, my safe space, and the one person who makes my
+                    world brighter no matter how dark a day can be. I appreciate you for all the little things you
+                    do—even the ones you don't realize: your smile that instantly makes me feel better, the way you
+                    listen, the way you hold me, and the way you make me laugh when I need it most. I love how you see
+                    me for who I really am and still choose me every day. Thank you for loving me so genuinely, for
+                    making me feel special, and for being patient with me. I love you more deeply than words could ever
+                    capture, and I promise to always love you, support you, and choose you—today, tomorrow, and for all
+                    the days to come❤️.
+                </p>
+                <a href="index.html" class="btn">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple Three.js background (stars or particles for birthday theme)
+        let scene, camera, renderer, particles;
+
+        function initThreeJS() {
+            const container = document.getElementById('canvas-container');
+
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            // Create particles (like floating stars or confetti) - updated color to match theme
+            const geometry = new THREE.BufferGeometry();
+            const vertices = [];
+            for (let i = 0; i < 1000; i++) {
+                vertices.push(
+                    Math.random() * 2000 - 1000,
+                    Math.random() * 2000 - 1000,
+                    Math.random() * 2000 - 1000
+                );
+            }
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+            const material = new THREE.PointsMaterial({ color: 0xff8e8e, size: 2 }); // Updated to #ff8e8e for theme
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            camera.position.z = 500;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.x += 0.0005;
+                particles.rotation.y += 0.001;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Resize handler
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+
+        // Initialize everything on load
+        window.addEventListener('load', () => {
+            initThreeJS();
+            initAnimations();
+            launchConfetti();
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+
+</html>
